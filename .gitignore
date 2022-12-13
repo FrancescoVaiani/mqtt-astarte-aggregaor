@@ -1,2 +1,5 @@
 /.idea/
 /.gradle/
+/mosquitto/log/mosquitto.log
+/device/out/
+/aggregator/out/
