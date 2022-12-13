@@ -1,0 +1,18 @@
+{
+  "interface_name": "com.secomind.SingleScan",
+  "version_major": 0,
+  "version_minor": 1,
+  "type": "datastream",
+  "ownership": "device",
+  "mappings": [
+    {
+      "endpoint": "/%{deviceId}/value",
+      "type": "string",
+      "reliability": "guaranteed",
+      "database_retention_policy": "use_ttl",
+      "database_retention_ttl": 31556952,
+      "explicit_timestamp": true,
+      "description": "Data read from a single scan"
+    }
+  ]
+}
