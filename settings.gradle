@@ -1,0 +1,4 @@
+rootProject.name = 'mqtt-aggregator-poc'
+include 'aggregator'
+include 'device'
+
