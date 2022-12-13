@@ -1,10 +1,15 @@
 package com.secomind.poc.aggregator.aggregator;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import java.io.FileReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.astarteplatform.devicesdk.AstarteDevice;
 import org.astarteplatform.devicesdk.generic.AstarteGenericDevice;
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class Main {
   public static AstarteDevice initAstarte(
@@ -48,18 +53,24 @@ public class Main {
   }
 
   public static void main(String[] args) throws Exception {
+    // Load configs
+    Path configPath = Paths.get("./config/aggregator/config.yml");
+    Constructor constructor = new Constructor(AggregatorConfig.class);
+    Yaml yaml = new Yaml(constructor);
+    AggregatorConfig configs = yaml.load(new FileReader(configPath.toFile()));
+
     // Astarte Initialization
-    String realm = "realm";
-    String pairingUrl = "pairing_url";
-    String deviceId = "device_id";
-    String credentialsSecret = "credentials_secret";
+    String realm = configs.getAstarteRealm();
+    String pairingUrl = configs.getAstartePairingUrl();
+    String deviceId = configs.getAstarteDeviceId();
+    String credentialsSecret = configs.getAstarteCredentialsSecret();
 
     AstarteDevice device = initAstarte(realm, pairingUrl, deviceId, credentialsSecret);
 
     // MQTT Initialization
-    String brokerURI = "tcp://localhost:1883";
-    String clientId = "aggregator";
-    String[] topics = {"data/group/group_1/+", "data/single/device_1"};
+    String brokerURI = configs.getMqttBrokerUri();
+    String clientId = configs.getMqttClientId();
+    String[] topics = configs.getMqttTopicList().toArray(new String[0]);
 
     MqttClient client = new MqttClient(brokerURI, clientId, new MemoryPersistence());
     client.setCallback(new AggregatorMqttEventCallback());

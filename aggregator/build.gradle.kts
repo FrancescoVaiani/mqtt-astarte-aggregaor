@@ -14,6 +14,9 @@ dependencies {
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     // https://mvnrepository.com/artifact/org.astarte-platform/devicesdk-generic
     implementation("org.astarte-platform:devicesdk-generic:1.0.3")
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    implementation("org.yaml:snakeyaml:1.33")
+
     implementation("com.h2database:h2:1.4.200")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

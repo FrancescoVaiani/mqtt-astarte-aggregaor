@@ -3,3 +3,6 @@
 /mosquitto/log/mosquitto.log
 /device/out/
 /aggregator/out/
+/aggregator/build/
+/build/
+/config/aggregator/config.yml.bk

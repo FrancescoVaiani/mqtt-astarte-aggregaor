@@ -1,0 +1,9 @@
+# Astarte config parameters
+astarteRealm: "realm"
+astartePairingUrl: "astarte_url"
+astarteDeviceId: "astarte_device_id"
+astarteCredentialsSecret: "astarte_credentials_secret"
+# MQTT config parameters
+mqttBrokerUri: "tcp://localhost:1883"
+mqttClientId: "aggregator"
+mqttTopicList: []
