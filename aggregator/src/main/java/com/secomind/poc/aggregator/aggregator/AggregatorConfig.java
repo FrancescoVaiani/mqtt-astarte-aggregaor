@@ -11,6 +11,8 @@ public class AggregatorConfig {
   private String mqttBrokerUri;
   private String mqttClientId;
   private List<String> mqttTopicList = new ArrayList<>();
+  private long reportSendRepetitionInSeconds;
+  private long groupSendRepetitionPeriod;
 
   public String getAstarteRealm() {
     return astarteRealm;
@@ -68,22 +70,49 @@ public class AggregatorConfig {
     this.mqttTopicList = mqttTopicList;
   }
 
+  public long getReportSendRepetitionInSeconds() {
+    return reportSendRepetitionInSeconds;
+  }
+
+  public void setReportSendRepetitionInSeconds(long reportSendRepetitionInSeconds) {
+    this.reportSendRepetitionInSeconds = reportSendRepetitionInSeconds;
+  }
+
+  public long getGroupSendRepetitionPeriod() {
+    return groupSendRepetitionPeriod;
+  }
+
+  public void setGroupSendRepetitionPeriod(long groupSendRepetitionPeriod) {
+    this.groupSendRepetitionPeriod = groupSendRepetitionPeriod;
+  }
+
   @Override
   public String toString() {
-    return "AggregatorConfig = [astarteRealm="
+    return "AggregatorConfig{"
+        + "astarteRealm='"
         + astarteRealm
-        + ", astartePairingUrl="
+        + '\''
+        + ", astartePairingUrl='"
         + astartePairingUrl
-        + ", astarteDeviceId="
+        + '\''
+        + ", astarteDeviceId='"
         + astarteDeviceId
-        + ", astarteCredentialsSecret="
+        + '\''
+        + ", astarteCredentialsSecret='"
         + astarteCredentialsSecret
-        + ", mqttBrokerUri="
+        + '\''
+        + ", mqttBrokerUri='"
         + mqttBrokerUri
-        + ", mqttClientId="
+        + '\''
+        + ", mqttClientId='"
         + mqttClientId
+        + '\''
         + ", mqttTopicList="
         + mqttTopicList
-        + "]";
+        + ", reportSendRepetitionInSeconds="
+        + reportSendRepetitionInSeconds
+        + ", groupSendRepetitionPeriod="
+        + groupSendRepetitionPeriod
+        + '}';
   }
 }

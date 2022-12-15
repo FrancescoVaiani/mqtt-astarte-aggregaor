@@ -18,7 +18,9 @@ public class AggregatorInterfaceProvider implements AstarteInterfaceProvider {
      * The interfaces used in this example are the Astarte standard-interfaces present in
      * the main Astarte repository.
      */
-    String[] interfaceNames = {"com.secomind.SingleScan"};
+    String[] interfaceNames = {
+      "com.secomind.SingleScan", "com.secomind.SingleReport", "com.secomind.GroupScan"
+    };
     Collection<JSONObject> interfaces = new HashSet<>();
 
     for (String interfaceName : interfaceNames) {

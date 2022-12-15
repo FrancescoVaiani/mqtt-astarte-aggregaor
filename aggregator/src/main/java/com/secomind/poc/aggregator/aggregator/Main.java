@@ -4,6 +4,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Timer;
 import org.astarteplatform.devicesdk.AstarteDevice;
 import org.astarteplatform.devicesdk.generic.AstarteGenericDevice;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -30,7 +31,7 @@ public class Main {
 
     /*
      * Set this if you want to let AstarteDevice take care of the reconnection. The default
-     * is false, which means that the application is responsible of reconnecting in case of
+     * is false, which means that the application is responsible for reconnecting in case of
      * failures
      */
     device.setAlwaysReconnect(true);
@@ -66,6 +67,8 @@ public class Main {
     String credentialsSecret = configs.getAstarteCredentialsSecret();
 
     AstarteDevice device = initAstarte(realm, pairingUrl, deviceId, credentialsSecret);
+    Aggregator aggregator = Aggregator.getInstance();
+    aggregator.setAstarteDevice(device);
 
     // MQTT Initialization
     String brokerURI = configs.getMqttBrokerUri();
@@ -73,10 +76,18 @@ public class Main {
     String[] topics = configs.getMqttTopicList().toArray(new String[0]);
 
     MqttClient client = new MqttClient(brokerURI, clientId, new MemoryPersistence());
-    client.setCallback(new AggregatorMqttEventCallback());
+    client.setCallback(new AggregatorMqttEventCallback(aggregator));
     client.connect();
     for (String topic : topics) {
       client.subscribe(topic, 0);
     }
+
+    Timer reportTimer = new Timer();
+    ScheduledReportTask reportTask = new ScheduledReportTask();
+    reportTimer.schedule(reportTask, 0, configs.getReportSendRepetitionInSeconds() * 1000);
+
+    Timer groupTimer = new Timer();
+    ScheduledGroupTask groupTask = new ScheduledGroupTask();
+    groupTimer.schedule(groupTask, 0, configs.getGroupSendRepetitionPeriod() * 1000);
   }
 }

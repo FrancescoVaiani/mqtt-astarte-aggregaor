@@ -1,0 +1,18 @@
+{
+  "interface_name": "com.secomind.GroupScan",
+  "version_major": 0,
+  "version_minor": 1,
+  "type": "datastream",
+  "ownership": "device",
+  "mappings": [
+    {
+      "endpoint": "/%{groupId}/data",
+      "type": "stringarray",
+      "reliability": "guaranteed",
+      "database_retention_policy": "use_ttl",
+      "database_retention_ttl": 31556952,
+      "explicit_timestamp": true,
+      "description": "Array of unique data scanned in the last frame of time "
+    }
+  ]
+}
